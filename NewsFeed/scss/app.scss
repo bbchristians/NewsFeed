@@ -124,6 +124,8 @@ $news-card-label-background-hover: scale-color($news-card-label-background, $lig
       .news-card-author-image {
         display: inline-block;
         vertical-align: middle;
+        max-height: 50px;
+        max-width: 50px;
 
         img {
           border-radius: 50%;

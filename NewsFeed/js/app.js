@@ -55,5 +55,4 @@ function UpdateESPNNews(league) {
   });
 }
 
-//UpdateESPNNews("NHL");
-createBlankTemplate();
+UpdateESPNNews("NHL");
