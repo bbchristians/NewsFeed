@@ -14,7 +14,7 @@ $file = json_decode($file);
 
 foreach($file->users as $user) {
   if ($user->username == $username) {
-    $user->last-login = $last_login;
+    $user->lastlogin = $last_login;
   }
 }
 
