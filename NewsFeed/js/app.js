@@ -1,5 +1,15 @@
 $(document).foundation();
 
+// Nav bar js
+$("[data-menu-underline-from-center] a").addClass("underline-from-center");
+
+
+// My js
+function clearNewsFeed(cb) {
+  $("#articles").empty();
+  cb();
+}
+
 function replacePlaceholder(html, ph, newValue) {
   return html.replace("%" + ph + "%", newValue);
 }
@@ -55,4 +65,10 @@ function UpdateESPNNews(league) {
   });
 }
 
-UpdateESPNNews("NHL");
+function swapFeeds(newFeed) {
+  clearNewsFeed(function() {
+    UpdateESPNNews(newFeed);
+  });
+}
+
+swapFeeds("NHL");
