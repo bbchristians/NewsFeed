@@ -13,7 +13,7 @@ function createNewsArticle(id, title, articleImage, date, ref, desc, author, aut
                 "link": ref,
                 "desc": desc,
                 "author": author,
-                "author-image", authorImage
+                "author-image": authorImage
                 };
     
     $.each( $replaces, function( key, value ) {
@@ -36,16 +36,20 @@ function UpdateESPNNews(league) {
       // For each item in data, display
       $.each( $items, function( index, value ) {
         
+        $image = "images/placeholder.png";
+        $author = "Unknown";
+        $authorImage = "images/author-placeholder.png";
+        
+        
         $.createNewsArticle("article-" + $('.news-card').length,
                             $(value).find("title").text(),
-                            "",
+                            $image,
                             $(value).find("pubDate").text(),
                             $(value).find("link").text(),
                             $(value).find("description").text(),
-                            "",
-                            ""
+                            $author,
+                            $authorImage
                             );
-        );
       });
     }
   });
