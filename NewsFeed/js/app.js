@@ -118,7 +118,7 @@ function login() {
         $.ajax( {
              url: 'register_user.php',
              data: {username: registerForm["username"],
-                    last-login: $currentTime
+                    lastlogin: $currentTime
                    },
              type: 'post',
              success: function(output) {

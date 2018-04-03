@@ -1,7 +1,7 @@
 <?php
 $file_name = 'js/users.json';
 $username = $_POST["username"];
-$last_login = $_POST["last-login"];
+$last_login = $_POST["lastlogin"];
 
 /*
 $user_data = array (
