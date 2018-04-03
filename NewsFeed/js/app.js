@@ -93,15 +93,18 @@ $('#login-form').submit(function() {
 */
 
 function login() {
-  values = {};
+  loginForm = {};
   $.each($('#login-form').serializeArray(), function(i, field) {
-      values[field.name] = field.value;
+      loginForm[field.name] = field.value;
   });
   
-  $.getJSON("js/users.json", function (json) {
+  $.getJSON("js/users.json", function (data) {
     $.each( data["users"], function (key, value) {
-      console.log(key);
-      console.log(value);
+      if ( loginForm["username"] === value["username"] && 
+           loginForm["password"] === value["password"]) {
+             
+        console.log("validated");
+      }
     });
   });
 }
