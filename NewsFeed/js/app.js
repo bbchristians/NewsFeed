@@ -137,9 +137,10 @@ function register() {
                     password: registerForm["password"]
                    },
              type: 'post',
-             success: function() {
+             success: function(output) {
+               console.log(output);
                Cookies.set("active-user", registerForm["username"]);
-               window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+               //window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
              }
     });
             

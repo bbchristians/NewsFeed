@@ -1,4 +1,5 @@
 <? php
+echo "test";
 $file_name = 'js/users.json';
 $username = $_POST["username"];
 $password = $_POST["password"];
