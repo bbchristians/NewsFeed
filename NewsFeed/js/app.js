@@ -14,10 +14,9 @@ function replacePlaceholder(html, ph, newValue) {
   return html.replace("%" + ph + "%", newValue);
 }
 
-function createNewsArticle(id, title, articleImage, date, ref, desc, author, authorImage) {
+function createNewsArticle(title, articleImage, date, ref, desc, author, authorImage) {
   $template = $.get("article.html", function callback(html_string) {
-    $replaces = {"id": id,
-                "title": title,
+    $replaces ={"title": title,
                 "image": articleImage,
                 "date": date,
                 "link": ref,
@@ -51,8 +50,7 @@ function UpdateESPNNews(league) {
         $authorImage = "images/author-placeholder.png";
         
         
-        createNewsArticle("article-" + $('.news-card').length,
-                            $(value).find("title").text(),
+        createNewsArticle($(value).find("title").text(),
                             $image,
                             $(value).find("pubDate").text(),
                             $(value).find("link").text(),
@@ -72,3 +70,35 @@ function swapFeeds(newFeed) {
 }
 
 swapFeeds("NHL");
+
+
+// Login functionality
+$('#login-form').submit(function() {
+  
+  var $inputs = $('#login-form :input');
+  var values = {};
+  
+  $inputs.each(function() {
+    values[this.name] = $(this).val();
+  });
+  
+  $.getJSON("js/users.json", function (json) {
+    $.each( data["users"], function (key, value) {
+      Cookies.set("test", (key + ":" + value));
+    });
+  });
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
