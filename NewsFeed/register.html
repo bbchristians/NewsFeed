@@ -4,23 +4,24 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News Feed - Login</title>
+    <title>News Feed - Register</title>
     <link rel="stylesheet" href="css/app.css">
   </head>
   <body>
   
     <div class="grid-container">
-      <div class="grid-x grid-padding-x align-center" style="padding-top:25%">
+      <div class="grid-x grid-padding-x align-center" style="padding-top:15%">
         <div class="large-4 medium-6 small-12 cell">
-          <form id="login-form">
+          <form id="register-form">
             <div class="sign-in-form">
-              <h4 class="text-center">Sign In</h4>
+              <h4 class="text-center">Register</h4>
               <label for="sign-in-form-username">Username</label>
               <input type="text" class="sign-in-form-username" id="sign-in-form-username" name="username">
               <label for="sign-in-form-password">Password</label>
               <input type="password" class="sign-in-form-password" id="sign-in-form-password" name="password">
-              <button type="button" class="sign-in-form-button" onclick="login();">Sign In</button>
-              <a class="register-link" href="register.html">Register</a>
+              <label for="sign-in-form-password-confirm">Confirm Password</label>
+              <input type="password" class="sign-in-form-password" id="sign-in-form-password-confirm" name="password-confirm">
+              <button type="button" class="sign-in-form-button" onclick="register();">Register</button>
             </div>
           </form>
         </div>

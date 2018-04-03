@@ -115,6 +115,33 @@ function logout() {
   window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/login.html");
 }
 
+function register() {
+  registerForm = {};
+  $.each($('#register-form').serializeArray(), function(i, field) {
+      registerForm[field.name] = field.value;
+  });
+  
+  if (registerForm["password"] != registerForm["password-confirm"] ) {
+    // report to user
+    return;
+  }
+  
+  // Append new user credentials to json fileCreatedDate
+  $.getJSON("js/users.json", function (data) {
+    $new_user = {username: registerForm["username"], password: registerForm["password"]};
+    data["users"].push($new_user);
+    
+    $new_data = JSON.stringify(data);
+    $.post("js/users.json", {
+              newData: $new_data
+            },
+            function (response) {
+              console.log(reponse);
+            });
+  });
+  
+}
+
 function displayLoginName() {
   if( !$("#username-display") ) {
     return;

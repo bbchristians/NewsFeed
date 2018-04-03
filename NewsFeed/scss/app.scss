@@ -218,6 +218,13 @@ $menu-underline-from-center-border-thickness: 0.125rem;
   input:focus {
     opacity: .8;
   }
+  
+  .register-link {
+    padding-top: 5%;
+    display: block;
+    width: 62px; // width of the word 'Register'
+    margin: auto;
+  }
 }
 
 .sign-in-form-username,
