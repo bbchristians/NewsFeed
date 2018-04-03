@@ -116,8 +116,8 @@ function login() {
         Cookies.set("last-login", $currentTime);
         
         $.ajax( {
-             url: 'register_user.php',
-             data: {username: registerForm["username"],
+             url: 'record_login.php',
+             data: {username: loginForm["username"],
                     lastlogin: $currentTime
                    },
              type: 'post',
