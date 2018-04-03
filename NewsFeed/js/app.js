@@ -103,11 +103,16 @@ function login() {
       if ( loginForm["username"] == value["username"] && 
            loginForm["password"] == value["password"]) {
              
-        console.log("validated");
         Cookies.set("active-user", loginForm["username"]);
+        window.location.replace("/");
       }
     });
   });
+}
+
+function logout(cb) {
+  Cookies.set("active-user", "None");
+  cb();
 }
 
 
