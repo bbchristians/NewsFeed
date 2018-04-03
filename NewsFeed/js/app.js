@@ -104,6 +104,31 @@ function login() {
            loginForm["password"] == value["password"]) {
              
         Cookies.set("active-user", loginForm["username"]);
+        
+        $currentdate = new Date(); 
+        $currentTime = ($currentdate.getMonth()+1) + "/"
+                    + $currentdate.getDate()  + "/" 
+                    + $currentdate.getFullYear() + " @ "  
+                    + $currentdate.getHours() + ":"  
+                    + $currentdate.getMinutes() + ":" 
+                    + $currentdate.getSeconds();
+        
+        Cookies.set("last-login", $currentTime);
+        
+        $.ajax( {
+             url: 'register_user.php',
+             data: {username: registerForm["username"],
+                    last-login: $currentTime
+                   },
+             type: 'post',
+             success: function(output) {
+               console.log("output:" + output);
+             },
+             error: function(jqxhr, status, exception) {
+               alert('Exception:', exception);
+             }
+        });
+        
         window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
       }
     });
@@ -138,7 +163,6 @@ function register() {
                    },
              type: 'post',
              success: function(output) {
-               console.log("output" + output);
                Cookies.set("active-user", registerForm["username"]);
                window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
              },
@@ -146,18 +170,6 @@ function register() {
                alert('Exception:', exception);
              }
     });
-            
-    
-    
-    /*
-    $new_data = JSON.stringify(data);
-    $.post("js/users.json", {
-              newData: $new_data
-            },
-            function (response) {
-              console.log(reponse);
-            });
-            */
   });
   
 }
@@ -167,6 +179,7 @@ function displayLoginName() {
     return;
   }
   
+  // Set active user display
   $active_user = "Not Logged In";
   
   if( Cookies.get("active-user") != "None" ) {
@@ -174,6 +187,16 @@ function displayLoginName() {
   }
   
   $("#username-display").text($active_user);
+  
+  // Set last login display
+  $last_login = "Never";
+  
+  if( Cookies.get("last-login") != "None" ) {
+    $last_login = Cookies.get("last-login");
+  }
+  
+  $("#last-login-display").text("Last logged in: " + $last_login);
+  
 }
 
 displayLoginName();
