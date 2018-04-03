@@ -153,7 +153,6 @@ $menu-underline-from-center-border-thickness: 0.125rem;
 .hover-underline-menu {
   width: 100%;
   position: fixed;
-  padding-bottom: 5%;
 
   .menu {
     background-color: $menu-underline-from-center-bg;
@@ -186,4 +185,7 @@ $menu-underline-from-center-border-thickness: 0.125rem;
 }
 // End SCSS for nav bar
 
+#articles {
+  padding-top: 10%;
+}
 
