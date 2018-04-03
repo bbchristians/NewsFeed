@@ -104,6 +104,7 @@ function login() {
            loginForm["password"] == value["password"]) {
              
         Cookies.set("active-user", loginForm["username"]);
+        Cookies.set("last-login", value["lastlogin"]);
         
         $currentdate = new Date(); 
         $currentTime = ($currentdate.getMonth()+1) + "/"
@@ -112,8 +113,6 @@ function login() {
                     + $currentdate.getHours() + ":"  
                     + $currentdate.getMinutes() + ":" 
                     + $currentdate.getSeconds();
-        
-        Cookies.set("last-login", $currentTime);
         
         $.ajax( {
              url: 'record_login.php',
