@@ -128,7 +128,7 @@ function login() {
              }
         });
         
-        window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+        //window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
       }
     });
   });
