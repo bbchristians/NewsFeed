@@ -1,9 +1,8 @@
 $(document).foundation();
 
 function createBlankTemplate() {
-  $.get("http://www.se.rit.edu/~bbc7909/NewsFeed/article.html", function callback(html_string) {
-    console.log(html_string);
-  });
+  $template = $.get("../article.html");
+  console.log($template);
 }
 
 
