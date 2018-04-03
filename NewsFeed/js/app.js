@@ -7,6 +7,7 @@ $("[data-menu-underline-from-center] a").addClass("underline-from-center");
 // My js
 function clearNewsFeed(cb) {
   $("#articles").empty();
+  // TODO Don't make callback if articles is null
   cb();
 }
 
@@ -71,7 +72,7 @@ function swapFeeds(newFeed) {
 
 swapFeeds("NHL");
 
-
+/*
 // Login functionality
 $('#login-form').submit(function() {
   
@@ -89,7 +90,21 @@ $('#login-form').submit(function() {
   });
     
 });
+*/
 
+function login() {
+  values = {};
+  $.each($('#login-form').serializeArray(), function(i, field) {
+      values[field.name] = field.value;
+  });
+  
+  $.getJSON("js/users.json", function (json) {
+    $.each( data["users"], function (key, value) {
+      console.log(key);
+      console.log(value);
+    });
+  });
+}
 
 
 
