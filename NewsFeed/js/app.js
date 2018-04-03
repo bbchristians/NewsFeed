@@ -104,7 +104,7 @@ function login() {
            loginForm["password"] == value["password"]) {
              
         Cookies.set("active-user", loginForm["username"]);
-        window.location.replace("/");
+        window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
       }
     });
   });
