@@ -152,6 +152,8 @@ $menu-underline-from-center-border-thickness: 0.125rem;
 
 .hover-underline-menu {
   width: 100%;
+  position: fixed;
+  padding-bottom: 5%;
 
   .menu {
     background-color: $menu-underline-from-center-bg;
