@@ -1,14 +1,14 @@
 $(document).foundation();
 
 function createBlankTemplate() {
-  $.get("../article.html", function callback(html_string) {
+  $.get("http://www.se.rit.edu/~bbc7909/NewsFeed/article.html", function callback(html_string) {
     console.log(html_string);
   });
 }
 
 
-function UpdateBBCWorldNews() {
-  $url = "http://feeds.bbci.co.uk/news/world/rss.xml";
+function UpdateESPNNews(league) {
+  $url = "http://www.espn.com/espn/rss/" + league + "/news";
   $.ajax({
     url: $url,
     dataType: 'xml',
@@ -22,3 +22,6 @@ function UpdateBBCWorldNews() {
     }
   });
 }
+
+//UpdateESPNNews("NHL");
+createBlankTemplate();
