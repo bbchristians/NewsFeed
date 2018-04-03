@@ -89,7 +89,7 @@ $news-card-label-background-hover: scale-color($news-card-label-background, $lig
   .card-section {
     background-color: inherit;
     
-    img {
+    .article-image {
       max-height: 400px;
       max-width: 400px;
     }
@@ -129,12 +129,12 @@ $news-card-label-background-hover: scale-color($news-card-label-background, $lig
       .news-card-author-image {
         display: inline-block;
         vertical-align: middle;
-        max-height: 50px;
-        max-width: 50px;
 
         img {
           border-radius: 50%;
           margin-right: 0.6em;
+          max-height: 50px;
+          max-width: 50px;
         }
       }
 
