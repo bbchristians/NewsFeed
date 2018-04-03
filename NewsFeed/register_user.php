@@ -1,4 +1,4 @@
-<? php
+<?php
 echo "test";
 $file_name = 'js/users.json';
 $username = $_POST["username"];
@@ -12,9 +12,9 @@ $user_data = array (
 $file = file_get_contents($file_name);
 $file = json_decode($file);
 
-array_push($file["users"], $user_data);
+array_push($file->users, $user_data);
 
 $json_data = json_encode($file);
 
-file_put_contents($file_name);
+file_put_contents($file_name, $json_data);
 ?>
