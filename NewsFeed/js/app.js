@@ -131,6 +131,21 @@ function register() {
     $new_user = {username: registerForm["username"], password: registerForm["password"]};
     data["users"].push($new_user);
     
+    $.ajax( {
+             url: 'register_user.php',
+             data: {username: registerForm["username"],
+                    password: registerForm["password"]
+                   },
+             type: 'post',
+             success: function() {
+               Cookies.set("active-user", registerForm["username"]);
+               window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+             }
+    });
+            
+    
+    
+    /*
     $new_data = JSON.stringify(data);
     $.post("js/users.json", {
               newData: $new_data
@@ -138,6 +153,7 @@ function register() {
             function (response) {
               console.log(reponse);
             });
+            */
   });
   
 }
