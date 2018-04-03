@@ -141,6 +141,9 @@ function register() {
                console.log(output);
                Cookies.set("active-user", registerForm["username"]);
                //window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+             },
+             error: function(jqxhr, status, exception) {
+               alert('Exception:', exception);
              }
     });
             
