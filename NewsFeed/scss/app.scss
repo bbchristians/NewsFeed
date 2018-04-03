@@ -88,6 +88,11 @@ $news-card-label-background-hover: scale-color($news-card-label-background, $lig
 
   .card-section {
     background-color: inherit;
+    
+    img {
+      max-height: 400px;
+      max-width: 400px;
+    }
 
     .news-card-date {
       font-size: 1em;

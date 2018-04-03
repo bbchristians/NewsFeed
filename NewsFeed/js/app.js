@@ -41,7 +41,7 @@ function UpdateESPNNews(league) {
         $authorImage = "images/author-placeholder.png";
         
         
-        $.createNewsArticle("article-" + $('.news-card').length,
+        createNewsArticle("article-" + $('.news-card').length,
                             $(value).find("title").text(),
                             $image,
                             $(value).find("pubDate").text(),
