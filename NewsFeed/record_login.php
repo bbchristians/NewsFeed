@@ -13,7 +13,7 @@ $file = file_get_contents($file_name);
 $file = json_decode($file);
 
 foreach($file->users as $user) {
-  if ($user["username"] == $username) {
+  if ($user->username == $username) {
     $user->lastlogin = $last_login;
   }
 }
