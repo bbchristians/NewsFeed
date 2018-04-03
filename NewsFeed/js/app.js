@@ -110,9 +110,9 @@ function login() {
   });
 }
 
-function logout(cb) {
+function logout() {
   Cookies.set("active-user", "None");
-  cb();
+  window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/login.html");
 }
 
 function displayLoginName() {
