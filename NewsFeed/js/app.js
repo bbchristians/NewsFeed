@@ -115,6 +115,21 @@ function logout(cb) {
   cb();
 }
 
+function displayLoginName() {
+  if( !$("#username-display") ) {
+    return;
+  }
+  
+  $active_user = "Not Logged In";
+  
+  if( Cookies.get("active-user") != "None" ) {
+    $active_user = Cookies.get("active-user");
+  }
+  
+  $("#username-display").text($active_user);
+}
+
+displayLoginName();
 
 
 
