@@ -100,10 +100,11 @@ function login() {
   
   $.getJSON("js/users.json", function (data) {
     $.each( data["users"], function (key, value) {
-      if ( loginForm["username"] === value["username"] && 
-           loginForm["password"] === value["password"]) {
+      if ( loginForm["username"] == value["username"] && 
+           loginForm["password"] == value["password"]) {
              
         console.log("validated");
+        Cookies.set("active-user", loginForm["username"]);
       }
     });
   });
