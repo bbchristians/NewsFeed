@@ -70,27 +70,8 @@ function swapFeeds(newFeed) {
   });
 }
 
+// Start at the NHL feed
 swapFeeds("NHL");
-
-/*
-// Login functionality
-$('#login-form').submit(function() {
-  
-  var $inputs = $('#login-form :input');
-  var values = {};
-  
-  $inputs.each(function() {
-    values[this.name] = $(this).val();
-  });
-  
-  $.getJSON("js/users.json", function (json) {
-    $.each( data["users"], function (key, value) {
-      Cookies.set("test", (key + ":" + value));
-    });
-  });
-    
-});
-*/
 
 function login() {
   loginForm = {};
@@ -129,6 +110,8 @@ function login() {
         });
         
         window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+      } else {
+          showBadCredentialsMessage();
       }
     });
   });
@@ -200,7 +183,9 @@ function displayLoginName() {
 
 displayLoginName();
 
-
+function showBadCredentialsMessage() {
+    $("#incorrect-pw").css("display", "block");
+}
 
 
 
