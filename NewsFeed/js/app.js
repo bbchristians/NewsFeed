@@ -80,9 +80,12 @@ function login() {
   });
   
   $.getJSON("js/users.json", function (data) {
+      $badCreds = true;
     $.each( data["users"], function (key, value) {
       if ( loginForm["username"] == value["username"] && 
            loginForm["password"] == value["password"]) {
+
+          $badCreds = false;
              
         Cookies.set("active-user", loginForm["username"]);
         Cookies.set("last-login", value["lastlogin"]);
@@ -110,10 +113,11 @@ function login() {
         });
         
         window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
-      } else {
-          showBadCredentialsMessage();
       }
     });
+    if ( $badCreds ) {
+        showBadCredentialsMessage();
+    }
   });
 }
 
