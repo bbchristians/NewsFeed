@@ -1,7 +1,7 @@
 <?php
 $file_name = 'js/users.json';
-$username = $_POST["username"];
-$last_login = $_POST["lastlogin"];
+$username = $_GET["username"];
+$last_login = $_GET["lastlogin"];
 
 $file = file_get_contents($file_name);
 $file = json_decode($file);

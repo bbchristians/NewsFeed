@@ -98,9 +98,9 @@ function login() {
         $.ajax( {
              url: 'record_login.php',
              data: {username: loginForm["username"],
-                    lastlogin: $currentTime
+                    lastlogin: "asd"//$currentTime
                    },
-             type: 'post',
+             type: 'get',
              success: function(output) {
                console.log("output:" + output);
              },
