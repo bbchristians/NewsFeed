@@ -98,14 +98,14 @@ function login() {
         $.ajax( {
              url: 'record_login.php',
              data: {username: loginForm["username"],
-                    lastlogin: "asd"//$currentTime
+                    lastlogin: $currentTime
                    },
              type: 'get',
              success: function(output) {
                console.log("output:" + output);
              },
              error: function(jqxhr, status, exception) {
-               alert('Exception:', exception);
+               //alert('Exception:', exception);
              }
         });
         
@@ -149,7 +149,7 @@ function register() {
                window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
              },
              error: function(jqxhr, status, exception) {
-               alert('Exception:', exception);
+               //alert('Exception:', exception);
              }
     });
   });
