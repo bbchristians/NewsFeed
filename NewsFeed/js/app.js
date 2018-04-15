@@ -160,10 +160,10 @@ function login() {
              type: 'get',
              success: function(output) {
                console.log("output:" + output);
-                 alert('Exception:');
+                 //alert('Exception:');
              },
              error: function(jqxhr, status, exception) {
-               alert('Exception:', exception);
+              // alert('Exception:', exception);
              }
         });
         
