@@ -34,6 +34,62 @@ function createNewsArticle(title, articleImage, date, ref, desc, author, authorI
   });
 }
 
+function ShowAllNewsFeeds() {
+
+    clearNewsFeed(function() {
+        $newsFeeds = ["NHL", "NFL", "NCAA", "NBA"];
+
+        $articles = {};
+        $.each($newsFeeds, function (index, value) {
+            $url = "http://www.espn.com/espn/rss/" + value + "/news";
+
+            $.ajax({
+                url: $url,
+                dataType: 'xml',
+                async: 'false',
+                success: function (data) {
+                    // Get all news items from data
+                    $items = $(data).find("item");
+                    // For each item in data, display
+                    $.each($items, function (index, value) {
+
+                        function pad(n){return n<10 ? '0'+n : n}
+                        $date = new Date( $(value).find("pubDate").text() );
+                        $articles[$date.getFullYear() + " " + $date.getMonth() + " " + pad($date.getDate()) + " " + $date.getHours() + " " + $date.getMinutes() + " " + $date.getSeconds()] = $(value);
+
+                    });
+                }
+            });
+        });
+
+        setTimeout(function(){
+            $keys = Object.keys($articles);
+            $keys.sort();
+            $keys.reverse();
+            $.each($keys, function (index, value) {
+                console.log($articles[value]);
+                $article = $articles[value];
+                $image = "images/placeholder.png";
+                $author = "Unknown";
+                $authorImage = "images/author-placeholder.png";
+
+
+                createNewsArticle(
+                    $article.find("title").text(),
+                    $image,
+                    //$(value).find("pubDate").text(),
+                    $article.find("pubDate").text(),
+                    $article.find("link").text(),
+                    $article.find("description").text(),
+                    $author,
+                    $authorImage
+                );
+            });
+        }, 2000);
+    });
+
+}
+
 
 function UpdateESPNNews(league) {
   $url = "http://www.espn.com/espn/rss/" + league + "/news";
@@ -106,9 +162,10 @@ function login() {
              type: 'get',
              success: function(output) {
                console.log("output:" + output);
+                 alert('Exception:');
              },
              error: function(jqxhr, status, exception) {
-               //alert('Exception:', exception);
+               alert('Exception:', exception);
              }
         });
         
