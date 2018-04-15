@@ -67,7 +67,6 @@ function ShowAllNewsFeeds() {
             $keys.sort();
             $keys.reverse();
             $.each($keys, function (index, value) {
-                console.log($articles[value]);
                 $article = $articles[value];
                 $image = "images/placeholder.png";
                 $author = "Unknown";
@@ -77,7 +76,6 @@ function ShowAllNewsFeeds() {
                 createNewsArticle(
                     $article.find("title").text(),
                     $image,
-                    //$(value).find("pubDate").text(),
                     $article.find("pubDate").text(),
                     $article.find("link").text(),
                     $article.find("description").text(),
