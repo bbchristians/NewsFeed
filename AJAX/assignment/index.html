@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="app.js"></script>
+</head>
+<body>
+	
+	<h3>Select a menu value to load the associated json file</h3>
+	
+	<select id="select" onchange="loadFile()">
+		<option value="json1.json">Valid file</option>
+		<option value="json2.json">Invalid file</option>
+	</select>
+	
+	<div id="test"></div>
+  
+  <a href="../../NewsFeed">Link to the RSS feed</a>
+  
+  <div id="gibberish" style="width:1000px;height:1000px;white-space:normal;"></div>
+	
+</body>
+</html>
