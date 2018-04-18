@@ -7,6 +7,7 @@ $("[data-menu-underline-from-center] a").addClass("underline-from-center");
 // My js
 function clearNewsFeed(cb) {
   $("#articles").empty();
+  $("#favorites").empty();
   // TODO Don't make callback if articles is null
   cb();
 }
@@ -31,7 +32,7 @@ function hash(s) {
     return hash;
 }
 
-function createNewsArticle(id, title, articleImage, date, ref, desc, author, authorImage) {
+function createNewsArticle(dest_id, id, title, articleImage, date, ref, desc, author, authorImage, fav) {
   $template = $.get("article.html", function callback(html_string) {
     $replaces ={"id" : id,
                 "title": title,
@@ -40,68 +41,90 @@ function createNewsArticle(id, title, articleImage, date, ref, desc, author, aut
                 "link": ref,
                 "desc": desc,
                 "author": author,
-                "author-image": authorImage
+                "author-image": authorImage,
+                "fav": fav
                 };
     
     $.each( $replaces, function( key, value ) {
       html_string = replacePlaceholder(html_string, key, value);
     });
     
-    $("#articles").append(html_string);
+    $("#" + dest_id).append(html_string);
   });
 }
 
 function ShowAllNewsFeeds() {
 
-    clearNewsFeed(function() {
-        $newsFeeds = ["NHL", "NFL", "NCAA", "NBA"];
+    $.ajax({
+        dataType: "json",
+        url: "js/users.json",
+        success: function (data) {
 
-        $articles = {};
-        $.each($newsFeeds, function (index, value) {
-            $url = "http://www.espn.com/espn/rss/" + value + "/news";
-
-            $.ajax({
-                url: $url,
-                dataType: 'xml',
-                async: 'false',
-                success: function (data) {
-                    // Get all news items from data
-                    $items = $(data).find("item");
-                    // For each item in data, display
-                    $.each($items, function (index, value) {
-
-                        function pad(n){return n<10 ? '0'+n : n}
-                        $date = new Date( $(value).find("pubDate").text() );
-                        $articles[$date.getFullYear() + " " + $date.getMonth() + " " + pad($date.getDate()) + " " + $date.getHours() + " " + $date.getMinutes() + " " + $date.getSeconds()] = $(value);
-
-                    });
+            $favorites = [];
+            $.each(data["users"], function(index, value) {
+                if (value.username === "test123") {//Cookies.get("active-user")) {
+                    $favorites = value.favorites;
                 }
             });
-        });
 
-        setTimeout(function(){
-            $keys = Object.keys($articles);
-            $keys.sort();
-            $keys.reverse();
-            $.each($keys, function (index, value) {
-                $article = $articles[value];
-                $image = "images/placeholder.png";
-                $author = "Unknown";
-                $authorImage = "images/author-placeholder.png";
+            clearNewsFeed(function() {
+                $newsFeeds = ["NHL", "NFL", "NCAA", "NBA"];
 
-                createNewsArticle(
-                    $hash($article.find("link").text()),
-                    $article.find("title").text(),
-                    $image,
-                    $article.find("pubDate").text(),
-                    $article.find("link").text(),
-                    $article.find("description").text(),
-                    $author,
-                    $authorImage
-                );
+                $articles = {};
+                $.each($newsFeeds, function (index, value) {
+                    $url = "http://www.espn.com/espn/rss/" + value + "/news";
+
+                    $.ajax({
+                        url: $url,
+                        dataType: 'xml',
+                        async: 'false',
+                        success: function (data) {
+                            // Get all news items from data
+                            $items = $(data).find("item");
+                            // For each item in data, add it to the map
+                            $.each($items, function (index, value) {
+
+                                function pad(n){return n<10 ? '0'+n : n}
+                                $date = new Date( $(value).find("pubDate").text() );
+                                $fav_flag = $.inArray(hash($(value).find("link").text()).toString(), $favorites) !== -1 ? "f" : "";
+                                $articles[$fav_flag + $date.getFullYear() + " " + pad($date.getMonth()) + " " + pad($date.getDate()) + " " + pad($date.getHours()) + " " + pad($date.getMinutes()) + " " + pad($date.getSeconds())] = $(value);
+
+                            });
+                        }
+                    });
+                });
+
+                setTimeout(function(){
+                    $keys = Object.keys($articles);
+                    $keys.sort();
+                    $keys.reverse();
+                    $.each($keys, function (index, value) {
+                        $article = $articles[value];
+                        $image = "images/placeholder.png";
+                        $author = "Unknown";
+                        $authorImage = "images/author-placeholder.png";
+                        $favorited = $.inArray(hash($article.find("link").text()).toString(), $favorites) !== -1 ? "is-favorited" : "unfavorited";
+                        $destination = $.inArray(hash($article.find("link").text()).toString(), $favorites) !== -1 ? "favorites" : "articles";
+
+                        createNewsArticle(
+                            $destination,
+                            hash($article.find("link").text()),
+                            $article.find("title").text(),
+                            $image,
+                            $article.find("pubDate").text(),
+                            $article.find("link").text(),
+                            $article.find("description").text(),
+                            $author,
+                            $authorImage,
+                            $favorited
+                        );
+                    });
+                }, 2000);
             });
-        }, 2000);
-    });
+        }
+    })
+
+
 
 }
 
@@ -112,25 +135,43 @@ function UpdateESPNNews(league) {
     url: $url,
     dataType: 'xml',
     success: function(data) {
-      // Get all news items from data
-      $items = $(data).find("item");
-      // For each item in data, display
-      $.each( $items, function( index, value ) {
-        
-        $image = "images/placeholder.png";
-        $author = "Unknown";
-        $authorImage = "images/author-placeholder.png";
-        
-        
-        createNewsArticle(  hash($(value).find("link").text()),
-                            $(value).find("title").text(),
-                            $image,
-                            $(value).find("pubDate").text(),
-                            $(value).find("link").text(),
-                            $(value).find("description").text(),
-                            $author,
-                            $authorImage
-                            );
+
+        $.ajax({
+            dataType: "json",
+            url: "js/users.json",
+            success: function (users_data) {
+                $favorites = [];
+                $.each(users_data["users"], function (index, value) {
+                    if (value.username === "test123") {//Cookies.get("active-user")) {
+                        $favorites = value.favorites;
+                    }
+                });
+
+                // Get all news items from data
+                $items = $(data).find("item");
+                // For each item in data, display
+                $.each($items, function (index, value) {
+
+                    $image = "images/placeholder.png";
+                    $author = "Unknown";
+                    $authorImage = "images/author-placeholder.png";
+                    $favorited = $.inArray(hash($(value).find("link").text()).toString(), $favorites) !== -1 ? "is-favorited" : "unfavorited";
+                    $destination = $.inArray(hash($(value).find("link").text()).toString(), $favorites) !== -1 ? "favorites" : "articles";
+
+                    createNewsArticle(
+                        $destination,
+                        hash($(value).find("link").text()),
+                        $(value).find("title").text(),
+                        $image,
+                        $(value).find("pubDate").text(),
+                        $(value).find("link").text(),
+                        $(value).find("description").text(),
+                        $author,
+                        $authorImage,
+                        $favorited
+                    );
+                })
+            }
       });
     }
   });
@@ -270,11 +311,26 @@ function toggleFavorite(favID) {
     console.log($fav.classList);
     if( $fav.classList.contains("unfavorited") ) {
         $("#" + favID).removeClass("unfavorited").addClass("is-favorited");
-        // TODO ajax request
+        $operation = "favorite";
     } else {
         $("#" + favID).removeClass("is-favorited").addClass("unfavorited");
-        // TODO ajax request
+        $operation = "unfavorite"
     }
+    $.ajax({
+        url: "set_favorite.php",
+        method: "post",
+        data: {
+            username: Cookies.get("active-user"),
+            fav_id: favID.split("-")[1],
+            operation: $operation
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        error: function (e,f,g) {
+            console.log("Something went wrong when trying to favorite the article");
+        }
+    });
 }
 
 
