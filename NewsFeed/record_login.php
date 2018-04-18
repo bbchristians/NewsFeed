@@ -9,7 +9,7 @@ $file = json_decode($file);
 foreach($file->users as $user) {
 
   if ($user->username == $username) {
-      $file->users[array_search($user,$file->users)]->lastLogin = $last_login;
+      $file->users[array_search($user,$file->users)]->lastlogin = $last_login;
   }
 }
 

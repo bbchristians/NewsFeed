@@ -62,7 +62,7 @@ function ShowAllNewsFeeds() {
 
             $favorites = [];
             $.each(data["users"], function(index, value) {
-                if (value.username === "test123") {//Cookies.get("active-user")) {
+                if (value.username === Cookies.get("active-user")) {
                     $favorites = value.favorites;
                 }
             });
@@ -142,7 +142,7 @@ function UpdateESPNNews(league) {
             success: function (users_data) {
                 $favorites = [];
                 $.each(users_data["users"], function (index, value) {
-                    if (value.username === "test123") {//Cookies.get("active-user")) {
+                    if (value.username === Cookies.get("active-user")) {
                         $favorites = value.favorites;
                     }
                 });

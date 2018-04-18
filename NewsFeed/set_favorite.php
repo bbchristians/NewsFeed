@@ -10,8 +10,12 @@ $file = json_decode($file);
 
 foreach($file->users as $user) {
 
-    if ($user->username == "test123") {//$username) {
-        $user_fav_list = $user->favorites;
+    if ($user->username == $username) {
+	    $user_fav_list = $user->favorites;
+
+	    if( empty($user_fav_list) ) {
+		$user_fav_list = array();
+	    }
 
         if ($operation == "favorite") {
             // Add to list of favorites
