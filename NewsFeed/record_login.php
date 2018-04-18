@@ -16,4 +16,5 @@ foreach($file->users as $user) {
 $json_data = json_encode($file);
 
 file_put_contents($file_name, $json_data);
+echo $_GET["username"].":".$_GET["lastlogin"];
 ?>

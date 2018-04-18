@@ -54,6 +54,52 @@
 $news-card-label-background: $primary-color;
 $news-card-label-background-hover: scale-color($news-card-label-background, $lightness: -15%);
 
+@mixin stroke($width, $color) {
+  $shadow: 0 0 0 transparent;
+  $i: 0;
+
+  @while ($i < $width) {
+    $i: $i + 1;
+    $j: 0;
+
+    @while ($j < 2) {
+      $j: $j + 1;
+
+      @for $k from 1 through 3 {
+        $x: 0;
+        $y: 0;
+
+        @if ($k == 1) {
+          $x: $i;
+        }
+
+        @if ($k == 2) {
+          $y: $i;
+        }
+
+        @if ($k == 3) {
+          $x: $i;
+          $y: $i;
+        }
+
+        @if ($j != 1) {
+          $x: $x * (0 - 1);
+          $y: $y * (0 - 1);
+        }
+
+        $shadow: #{$shadow}, #{$x}px #{$y}px 0 $color;
+      }
+    }
+  }
+
+  text-shadow: $shadow;
+
+  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+    text-shadow: none;
+    -webkit-text-stroke: #{$width}px $color;
+  }
+}
+
 .news-card-tag {
   margin-bottom: 0.5rem;
 
@@ -302,4 +348,33 @@ $mobile-bottom-bar-primary-dark: darken($primary-color, 20%);
 
 #incorrect-pw {
   display: none;
+}
+
+
+$favorite-color: goldenrod;
+$favorite-scale: 2;
+
+.unfavorited {
+  color: transparent;
+  @include stroke(2, $favorite-color);
+  font-size: 100% * $favorite-scale;
+
+  &:active {
+    color: $favorite-color;
+  }
+}
+
+.is-favorited {
+  color: $favorite-color;
+  @include stroke(2, $favorite-color);
+  font-size: 100% * $favorite-scale;
+
+  &:active {
+    color: transparent;
+  }
+}
+
+.fav-star {
+  float: right;
+  padding-top: 2%;
 }

@@ -12,12 +12,29 @@ function clearNewsFeed(cb) {
 }
 
 function replacePlaceholder(html, ph, newValue) {
-  return html.replace("%" + ph + "%", newValue);
+  return html.replace(new RegExp("%" + ph + "%", "g"), newValue);
 }
 
-function createNewsArticle(title, articleImage, date, ref, desc, author, authorImage) {
+
+// From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
+function hash(s) {
+    var hash = 0, i, chr;
+    if (s.length === 0) return hash;
+    for (i = 0; i < s.length; i++) {
+        chr   = s.charCodeAt(i);
+        hash  = ((hash << 5) - hash) + chr;
+        hash |= 0; // Convert to 32bit integer
+    }
+    if( hash < 0 ) {
+        hash = hash * -1;
+    }
+    return hash;
+}
+
+function createNewsArticle(id, title, articleImage, date, ref, desc, author, authorImage) {
   $template = $.get("article.html", function callback(html_string) {
-    $replaces ={"title": title,
+    $replaces ={"id" : id,
+                "title": title,
                 "image": articleImage,
                 "date": date,
                 "link": ref,
@@ -72,8 +89,8 @@ function ShowAllNewsFeeds() {
                 $author = "Unknown";
                 $authorImage = "images/author-placeholder.png";
 
-
                 createNewsArticle(
+                    $hash($article.find("link").text()),
                     $article.find("title").text(),
                     $image,
                     $article.find("pubDate").text(),
@@ -105,7 +122,8 @@ function UpdateESPNNews(league) {
         $authorImage = "images/author-placeholder.png";
         
         
-        createNewsArticle($(value).find("title").text(),
+        createNewsArticle(  hash($(value).find("link").text()),
+                            $(value).find("title").text(),
                             $image,
                             $(value).find("pubDate").text(),
                             $(value).find("link").text(),
@@ -161,13 +179,14 @@ function login() {
              success: function(output) {
                console.log("output:" + output);
                  //alert('Exception:');
+               window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
              },
              error: function(jqxhr, status, exception) {
               // alert('Exception:', exception);
              }
         });
         
-        window.location.replace("http://www.se.rit.edu/~bbc7909/NewsFeed/");
+
       }
     });
     if ( $badCreds ) {
@@ -244,6 +263,18 @@ displayLoginName();
 
 function showBadCredentialsMessage() {
     $("#incorrect-pw").css("display", "block");
+}
+
+function toggleFavorite(favID) {
+    $fav = $("#" + favID)[0];
+    console.log($fav.classList);
+    if( $fav.classList.contains("unfavorited") ) {
+        $("#" + favID).removeClass("unfavorited").addClass("is-favorited");
+        // TODO ajax request
+    } else {
+        $("#" + favID).removeClass("is-favorited").addClass("unfavorited");
+        // TODO ajax request
+    }
 }
 
 
