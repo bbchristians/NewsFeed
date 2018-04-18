@@ -308,7 +308,7 @@ function showBadCredentialsMessage() {
 
 function toggleFavorite(favID) {
     $fav = $("#" + favID)[0];
-    console.log($fav.classList);
+
     if( $fav.classList.contains("unfavorited") ) {
         $("#" + favID).removeClass("unfavorited").addClass("is-favorited");
         $operation = "favorite";
@@ -325,7 +325,7 @@ function toggleFavorite(favID) {
             operation: $operation
         },
         success: function (data) {
-            console.log(data);
+            //console.log(data);
         },
         error: function (e,f,g) {
             console.log("Something went wrong when trying to favorite the article");
